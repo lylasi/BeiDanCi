@@ -1,0 +1,20 @@
+### Unit 3 Museum Day
+entrance#入口
+exit#出口
+escalator#自動扶梯
+lift#電梯/升降機
+display#展品
+exhibition hall#展覽廳
+information board#資訊板
+theatre#劇場
+souvenir shop#紀念品商店
+ticket counter#售票處
+museum#博物館
+directory#指南
+zone#區/區域
+dinosaur#恐龍
+sound#聽起來好像
+behave#表现得體
+fright#驚嚇
+safety belt#安全帶
+stairs#樓梯

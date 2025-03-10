@@ -215,10 +215,10 @@ const playNextWord = () => {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <div style={{ marginBottom: '20px' }}>
+    <div style={{ padding: '10px', width: '100%', maxWidth: '100vw', boxSizing: 'border-box' }}>
+      <div style={{ marginBottom: '15px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
         <Select
-          style={{ width: 200, marginRight: '10px' }}
+          style={{ width: '100%' }}
           placeholder="选择单词本"
           onChange={(value) => {
             const wordBook = wordBooks.find(wb => wb.id === value);
@@ -233,7 +233,7 @@ const playNextWord = () => {
         </Select>
 
         <Select
-          style={{ width: 200, marginRight: '10px' }}
+          style={{ width: '100%' }}
           placeholder="选择语音模型"
           value={selectedVoiceModel}
           onChange={setSelectedVoiceModel}
@@ -244,37 +244,89 @@ const playNextWord = () => {
         </Select>
       </div>
 
-      <div style={{ marginBottom: '20px' }}>
-        <span style={{ marginRight: '10px' }}>单词播放次数：</span>
-        <InputNumber
-          min={1}
-          value={wordPlayCount}
-          onChange={setWordPlayCount}
-          style={{ marginRight: '20px' }}
-        />
+      <div style={{ marginBottom: '15px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <span>单词播放次数：</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <Button
+              onClick={() => setWordPlayCount(prev => Math.max(1, prev - 1))}
+              size="small"
+            >
+              -
+            </Button>
+            <InputNumber
+              min={1}
+              value={wordPlayCount}
+              onChange={setWordPlayCount}
+              style={{ width: '60px', margin: '0 5px' }}
+              controls={false}
+            />
+            <Button
+              onClick={() => setWordPlayCount(prev => prev + 1)}
+              size="small"
+            >
+              +
+            </Button>
+          </div>
+        </div>
 
-        <span style={{ marginRight: '10px' }}>循环次数：</span>
-        <InputNumber
-          min={1}
-          value={playCount}
-          onChange={setPlayCount}
-          style={{ marginRight: '20px' }}
-        />
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <span>循环次数：</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <Button
+              onClick={() => setPlayCount(prev => Math.max(1, prev - 1))}
+              size="small"
+            >
+              -
+            </Button>
+            <InputNumber
+              min={1}
+              value={playCount}
+              onChange={setPlayCount}
+              style={{ width: '60px', margin: '0 5px' }}
+              controls={false}
+            />
+            <Button
+              onClick={() => setPlayCount(prev => prev + 1)}
+              size="small"
+            >
+              +
+            </Button>
+          </div>
+        </div>
 
-        <span style={{ marginRight: '10px' }}>间隔时间（秒）：</span>
-        <InputNumber
-          min={1}
-          value={intervalSeconds}
-          onChange={setIntervalSeconds}
-          style={{ marginRight: '20px' }}
-        />
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <span>间隔时间（秒）：</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <Button
+              onClick={() => setIntervalSeconds(prev => Math.max(1, prev - 1))}
+              size="small"
+            >
+              -
+            </Button>
+            <InputNumber
+              min={1}
+              value={intervalSeconds}
+              onChange={setIntervalSeconds}
+              style={{ width: '60px', margin: '0 5px' }}
+              controls={false}
+            />
+            <Button
+              onClick={() => setIntervalSeconds(prev => prev + 1)}
+              size="small"
+            >
+              +
+            </Button>
+          </div>
+        </div>
 
-        <span style={{ marginRight: '10px' }}>播放中文：</span>
-        <Switch
-          checked={playChineseMeaning}
-          onChange={setPlayChineseMeaning}
-          style={{ marginRight: '20px' }}
-        />
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <span>播放中文：</span>
+          <Switch
+            checked={playChineseMeaning}
+            onChange={setPlayChineseMeaning}
+          />
+        </div>
       </div>
 
       <div style={{ marginBottom: '20px' }}>
