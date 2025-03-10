@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Select, InputNumber, Switch, message } from 'antd';
-import { PlayCircleOutlined, PauseCircleOutlined } from '@ant-design/icons';
+import { PlayCircleOutlined, PauseCircleOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { voiceModels, voiceTypes } from '../config/voiceModels';
 import { voiceManager } from '../utils/voiceManager';
 
@@ -15,21 +15,82 @@ const WordListen = ({ wordBooks }) => {
   const [selectedVoiceModel, setSelectedVoiceModel] = useState('zh-CN-XiaoxiaoNeural');
   const [wordPlayCount, setWordPlayCount] = useState(1);
   const [currentWordPlayCount, setCurrentWordPlayCount] = useState(0);
+  const [touchStart, setTouchStart] = useState(null);
+  const [currentAudio, setCurrentAudio] = useState(null);
+
+  const handleTouchStart = (e) => {
+    setTouchStart(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e) => {
+    if (!touchStart) return;
+    
+    const touchEnd = e.changedTouches[0].clientX;
+    const diff = touchStart - touchEnd;
+
+    // 滑动距离大于50px时触发切换
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        // 向左滑动，下一个单词
+        handleChangeWord(1);
+      } else {
+        // 向右滑动，上一个单词
+        handleChangeWord(-1);
+      }
+    }
+    setTouchStart(null);
+  };
+
+  const handleChangeWord = (direction) => {
+    if (!selectedWordBook) return;
+    
+    // 停止当前播放的音频
+    if (currentAudio) {
+      currentAudio.pause();
+      URL.revokeObjectURL(currentAudio.src);
+      setCurrentAudio(null);
+    }
+    
+    const words = selectedWordBook.words;
+    let newIndex = currentWordIndex + direction;
+    
+    // 循环切换
+    if (newIndex < 0) {
+      newIndex = words.length - 1;
+    } else if (newIndex >= words.length) {
+      newIndex = 0;
+    }
+    
+    // 重置播放状态并立即开始新单词的播放
+    setCurrentWordIndex(newIndex);
+    setCurrentWordPlayCount(0);
+    setIsPlaying(true); // 设置为播放状态，触发 useEffect 开始播放
+  };
 
   const playWord = async (word) => {
     try {
+      // 如果有正在播放的音频，先停止它
+      if (currentAudio) {
+        currentAudio.pause();
+        URL.revokeObjectURL(currentAudio.src);
+        setCurrentAudio(null);
+      }
+
       const audio = await voiceManager.getVoice(selectedVoiceModel, word);
       const audioUrl = URL.createObjectURL(audio);
       const audioElement = new Audio(audioUrl);
+      setCurrentAudio(audioElement);
       
       return new Promise((resolve, reject) => {
         audioElement.onended = () => {
           URL.revokeObjectURL(audioUrl);
+          setCurrentAudio(null);
           resolve(true);
         };
         
         audioElement.onerror = (error) => {
           URL.revokeObjectURL(audioUrl);
+          setCurrentAudio(null);
           console.error('播放音频失败:', error);
           message.error(`播放"${word}"失败`);
           reject(error);
@@ -245,11 +306,33 @@ const playNextWord = () => {
       <div style={{ marginBottom: '20px' }}>
         <h3>当前播放：</h3>
         {getCurrentWord() && (
-          <div>
-            <p>英文：{getCurrentWord().english}</p>
-            <p>中文：{getCurrentWord().chinese}</p>
-            <p>进度：{currentWordIndex + 1}/{selectedWordBook?.words.length} (第{currentLoop + 1}轮)</p>
-            <p>当前单词播放次数：{currentWordPlayCount + 1}/{wordPlayCount}</p>
+          <div
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            style={{ 
+              position: 'relative',
+              padding: '20px',
+              border: '1px solid #e8e8e8',
+              borderRadius: '4px',
+              touchAction: 'pan-y pinch-zoom'
+            }}
+          >
+            <Button 
+              icon={<LeftOutlined />}
+              style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)' }}
+              onClick={() => handleChangeWord(-1)}
+            />
+            <div style={{ margin: '0 40px' }}>
+              <p>英文：{getCurrentWord().english}</p>
+              <p>中文：{getCurrentWord().chinese}</p>
+              <p>进度：{currentWordIndex + 1}/{selectedWordBook?.words.length} (第{currentLoop + 1}轮)</p>
+              <p>当前单词播放次数：{currentWordPlayCount + 1}/{wordPlayCount}</p>
+            </div>
+            <Button 
+              icon={<RightOutlined />}
+              style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)' }}
+              onClick={() => handleChangeWord(1)}
+            />
           </div>
         )}
       </div>
