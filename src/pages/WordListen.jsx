@@ -49,79 +49,85 @@ const WordListen = ({ wordBooks }) => {
     if (!currentWord) return;
   
     try {
-      // 先检查英文是否为空
       if (!currentWord.english.trim()) {
         return true;
       }
   
-      // 播放英文
       const englishSuccess = await playWord(currentWord.english);
       
-      // 如果英文播放成功且需要播放中文，且中文不为空，则播放中文
       if (playChineseMeaning && englishSuccess && currentWord.chinese.trim()) {
         await playWord(currentWord.chinese);
       }
-  
-      // 更新当前单词播放次数
-      setCurrentWordPlayCount(prevCount => {
-        const newCount = prevCount + 1;
-        // 如果达到设定的播放次数，返回设定值（这样可以触发useEffect）
-        return newCount >= wordPlayCount ? wordPlayCount : newCount;
-      });
       
-      // 如果当前单词播放次数达到设定值，重置计数并返回true以进入下一个单词
-      return currentWordPlayCount >= wordPlayCount;
+      return true; // 播放成功
     } catch (error) {
       console.error('播放单词失败:', error);
       return false;
     }
-  };
+};
 
-  useEffect(() => {
+useEffect(() => {
     let timer;
+    let isMounted = true; // 添加组件挂载状态标记
+
     if (isPlaying && selectedWordBook) {
       const playAndScheduleNext = async () => {
-        const shouldMoveToNext = await playCurrentWord();
-        if (shouldMoveToNext) {
-          timer = setTimeout(() => {
-            if (currentWordPlayCount >= wordPlayCount) {
+        if (!isMounted) return;
+
+        const playSuccess = await playCurrentWord();
+        
+        if (!isMounted) return;
+        
+        if (playSuccess) {
+          const nextCount = currentWordPlayCount + 1;
+          
+          if (nextCount >= wordPlayCount) {
+            timer = setTimeout(() => {
+              if (!isMounted) return;
+              setCurrentWordPlayCount(0);
               playNextWord();
-            }
-          }, intervalSeconds * 1000);
+            }, intervalSeconds * 1000);
+          } else {
+            setCurrentWordPlayCount(nextCount);
+            timer = setTimeout(playAndScheduleNext, intervalSeconds * 1000);
+          }
         }
       };
+      
       playAndScheduleNext();
     }
-    return () => clearTimeout(timer);
-  }, [isPlaying, currentWordIndex, currentLoop, selectedWordBook, currentWordPlayCount]);
+    
+    return () => {
+      isMounted = false;
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+}, [isPlaying, currentWordIndex, currentLoop, selectedWordBook, currentWordPlayCount, wordPlayCount]);
 
-  const playNextWord = () => {
+const playNextWord = () => {
     if (!selectedWordBook) return;
-  
-    // 如果当前单词还未播放完设定次数，不进入下一个单词
-    if (currentWordPlayCount < wordPlayCount) {
-      return;
-    }
-  
-    // 重置当前单词播放次数
-    setCurrentWordPlayCount(0);
-  
+    
+    console.log('切换到下一个单词');
     const words = selectedWordBook.words;
+    
     if (currentWordIndex >= words.length - 1) {
       if (currentLoop >= playCount - 1) {
+        console.log('播放完成所有循环');
         setIsPlaying(false);
         setCurrentWordIndex(0);
         setCurrentLoop(0);
-        setCurrentWordPlayCount(0);
         message.success('播放完成');
         return;
       }
+      console.log('开始新的循环');
       setCurrentLoop(currentLoop + 1);
       setCurrentWordIndex(0);
     } else {
+      console.log('移动到下一个单词');
       setCurrentWordIndex(currentWordIndex + 1);
     }
-  };
+};
 
   const handlePlay = () => {
     if (!selectedWordBook) {
