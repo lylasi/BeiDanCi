@@ -314,7 +314,13 @@ const playNextWord = () => {
               padding: '20px',
               border: '1px solid #e8e8e8',
               borderRadius: '4px',
-              touchAction: 'pan-y pinch-zoom'
+              touchAction: 'pan-y pinch-zoom',
+              backgroundColor: '#f0f8ff', // 添加背景色
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // 添加阴影
+              transition: 'transform 0.2s', // 添加过渡效果
+              ':hover': {
+                transform: 'scale(1.05)' // 鼠标悬停时放大
+              }
             }}
           >
             <Button 
@@ -322,9 +328,9 @@ const playNextWord = () => {
               style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)' }}
               onClick={() => handleChangeWord(-1)}
             />
-            <div style={{ margin: '0 40px' }}>
-              <p>英文：{getCurrentWord().english}</p>
-              <p>中文：{getCurrentWord().chinese}</p>
+            <div style={{ margin: '0 40px', textAlign: 'center' }}>
+              <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#333' }}>{getCurrentWord().english}</p>
+              <p style={{ fontSize: '20px', color: '#666' }}>{getCurrentWord().chinese}</p>
               <p>进度：{currentWordIndex + 1}/{selectedWordBook?.words.length} (第{currentLoop + 1}轮)</p>
               <p>当前单词播放次数：{currentWordPlayCount + 1}/{wordPlayCount}</p>
             </div>
