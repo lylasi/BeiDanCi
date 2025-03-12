@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Select, InputNumber, Switch, message } from 'antd';
-import { PlayCircleOutlined, PauseCircleOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { PlayCircleOutlined, PauseCircleOutlined, LeftOutlined, RightOutlined, SoundOutlined } from '@ant-design/icons';
 import { voiceModels, voiceTypes } from '../config/voiceModels';
 import { voiceManager } from '../utils/voiceManager';
+import { youdaoVoiceManager } from '../utils/youdaoVoiceManager';
 
 const WordListen = ({ wordBooks }) => {
   const [selectedWordBook, setSelectedWordBook] = useState(null);
@@ -41,6 +42,12 @@ const WordListen = ({ wordBooks }) => {
     setTouchStart(null);
   };
 
+  useEffect(() => {
+    if (!isPlaying && selectedWordBook) {
+      playCurrentWord(); // 播放一次切换后的单词
+    }
+  }, [currentWordIndex]);
+
   const handleChangeWord = (direction) => {
     if (!selectedWordBook) return;
     
@@ -61,10 +68,18 @@ const WordListen = ({ wordBooks }) => {
       newIndex = 0;
     }
     
-    // 重置播放状态并立即开始新单词的播放
+    // 重置播放状态
     setCurrentWordIndex(newIndex);
     setCurrentWordPlayCount(0);
-    setIsPlaying(true); // 设置为播放状态，触发 useEffect 开始播放
+    
+    // 使用 setState 的回调函数来确保 playCurrentWord 使用的是更新后的索引
+    setCurrentWordIndex(newIndex, () => {
+      if (isPlaying) {
+        setIsPlaying(true); // 继续播放
+      } else {
+        playCurrentWord(); // 播放一次切换后的单词
+      }
+    });
   };
 
   const playWord = async (word) => {
@@ -346,7 +361,7 @@ const playNextWord = () => {
             onClick={handlePlay}
             style={{ marginRight: '10px' }}
           >
-            播放
+            自动播放
           </Button>
         )}
 
@@ -382,6 +397,21 @@ const playNextWord = () => {
             />
             <div style={{ margin: '0 40px', textAlign: 'center' }}>
               <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#333' }}>{getCurrentWord().english}</p>
+              <div style={{ marginBottom: '10px' }}>
+                <Button
+                  icon={<SoundOutlined />}
+                  onClick={() => youdaoVoiceManager.playBritishVoice(getCurrentWord().english)}
+                  style={{ marginRight: '10px' }}
+                >
+                  英音
+                </Button>
+                <Button
+                  icon={<SoundOutlined />}
+                  onClick={() => youdaoVoiceManager.playAmericanVoice(getCurrentWord().english)}
+                >
+                  美音
+                </Button>
+              </div>
               <p style={{ fontSize: '20px', color: '#666' }}>{getCurrentWord().chinese}</p>
               <p>进度：{currentWordIndex + 1}/{selectedWordBook?.words.length} (第{currentLoop + 1}轮)</p>
               <p>当前单词播放次数：{currentWordPlayCount + 1}/{wordPlayCount}</p>
