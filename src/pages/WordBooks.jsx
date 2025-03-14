@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Table, Button, Modal, Input, message, Upload } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Table, Button, Modal, Input, message, Upload, Popconfirm } from 'antd';
 import { UploadOutlined, DeleteOutlined, ExportOutlined } from '@ant-design/icons';
 
 const WordBooks = ({ wordBooks, setWordBooks, onImportToListen }) => {
@@ -7,6 +7,35 @@ const WordBooks = ({ wordBooks, setWordBooks, onImportToListen }) => {
   const [currentWordBook, setCurrentWordBook] = useState(null);
   const [wordBookName, setWordBookName] = useState('');
   const [wordContent, setWordContent] = useState('');
+
+  // 初始化时从 localStorage 加载用户自定义单词本
+  useEffect(() => {
+    const savedWordBooks = localStorage.getItem('userWordBooks');
+    if (savedWordBooks) {
+      try {
+        const userWordBooks = JSON.parse(savedWordBooks);
+        // 合并默认单词本和用户单词本，避免重复
+        const defaultIds = wordBooks.filter(wb => wb.isDefault).map(wb => wb.id);
+        const filteredUserBooks = userWordBooks.filter(wb => !defaultIds.includes(wb.id));
+        
+        // 修改这里：将用户单词本放在前面，默认单词本放在后面
+        setWordBooks([...filteredUserBooks, ...wordBooks.filter(wb => wb.isDefault)]);
+      } catch (error) {
+        console.error('加载保存的单词本失败:', error);
+      }
+    }
+  }, []);
+
+  // 保存单词本到 localStorage
+  const saveToLocalStorage = (updatedWordBooks) => {
+    try {
+      // 只保存用户自定义的单词本
+      const userWordBooks = updatedWordBooks.filter(wb => !wb.isDefault);
+      localStorage.setItem('userWordBooks', JSON.stringify(userWordBooks));
+    } catch (error) {
+      console.error('保存单词本到本地存储失败:', error);
+    }
+  };
 
   // 表格列定义
   const columns = [
@@ -28,14 +57,32 @@ const WordBooks = ({ wordBooks, setWordBooks, onImportToListen }) => {
         <div>
           <Button type="link" onClick={() => handleEdit(record)}>编辑</Button>
           <Button type="link" onClick={() => handleExport(record)}>导出</Button>
-          <Button 
-            type="link" 
-            danger 
+          <Popconfirm
+            title="确认删除"
+            description={`确定要删除单词本「${record.name}」吗？`}
+            // Popconfirm 中的删除操作也需要保持排序
+            // 在 columns 定义中修改 onConfirm 回调
+            // 修改第 53-55 行左右的代码
+            onConfirm={() => {
+              const userBooks = wordBooks.filter(wb => !wb.isDefault && wb.id !== record.id);
+              const defaultBooks = wordBooks.filter(wb => wb.isDefault);
+              const updatedWordBooks = [...userBooks, ...defaultBooks];
+              setWordBooks(updatedWordBooks);
+              saveToLocalStorage(updatedWordBooks);
+              message.success('删除成功');
+            }}
+            okText="确定"
+            cancelText="取消"
             disabled={record.isDefault}
-            onClick={() => handleDelete(record)}
           >
-            删除
-          </Button>
+            <Button 
+              type="link" 
+              danger 
+              disabled={record.isDefault}
+            >
+              删除
+            </Button>
+          </Popconfirm>
         </div>
       )
     }
@@ -45,7 +92,13 @@ const WordBooks = ({ wordBooks, setWordBooks, onImportToListen }) => {
   const handleEdit = (wordBook) => {
     setCurrentWordBook(wordBook);
     setWordBookName(wordBook.name);
-    setWordContent(wordBook.words.map(word => `${word.english}#${word.chinese}`).join('\n'));
+    setWordContent(wordBook.words.map(word => {
+      let line = `${word.english}#${word.chinese}`;
+      if (word.phonetic) {
+        line += `@${word.phonetic}`;
+      }
+      return line;
+    }).join('\n'));
     setEditModalVisible(true);
   };
 
@@ -69,7 +122,14 @@ const WordBooks = ({ wordBooks, setWordBooks, onImportToListen }) => {
       .map(line => {
         // 支持多种分隔符：#、,、|
         const separators = ['#', ',', '|'];
-        let english = line.trim(), chinese = '';
+        let english = line.trim(), chinese = '', phonetic = '';
+        
+        // 检查是否有音标部分 (使用 @ 分隔)
+        if (line.includes('@')) {
+          const parts = line.split('@');
+          line = parts[0]; // 取前半部分继续处理
+          phonetic = parts[1].trim(); // 获取音标部分
+        }
         
         for (const separator of separators) {
           if (line.includes(separator)) {
@@ -82,18 +142,19 @@ const WordBooks = ({ wordBooks, setWordBooks, onImportToListen }) => {
           }
         }
 
-        return { english, chinese };
+        return { english, chinese, phonetic };
       });
 
     try {
+      let updatedWordBooks;
+      
       if (currentWordBook) {
         // 编辑现有单词本
-        const updatedWordBooks = wordBooks.map(wb =>
+        updatedWordBooks = wordBooks.map(wb =>
           wb.id === currentWordBook.id
             ? { ...wb, name: wordBookName, words }
             : wb
         );
-        setWordBooks(updatedWordBooks);
       } else {
         // 创建新单词本
         const newWordBook = {
@@ -102,9 +163,15 @@ const WordBooks = ({ wordBooks, setWordBooks, onImportToListen }) => {
           words,
           isDefault: false
         };
-        setWordBooks([...wordBooks, newWordBook]);
+        // 修改这里：将新单词本添加到列表前面
+        const userBooks = wordBooks.filter(wb => !wb.isDefault);
+        const defaultBooks = wordBooks.filter(wb => wb.isDefault);
+        updatedWordBooks = [newWordBook, ...userBooks, ...defaultBooks];
       }
-
+      
+      setWordBooks(updatedWordBooks);
+      saveToLocalStorage(updatedWordBooks); // 保存到 localStorage
+      
       setEditModalVisible(false);
       message.success(`${currentWordBook ? '更新' : '创建'}单词本成功`);
     } catch (error) {
@@ -112,28 +179,16 @@ const WordBooks = ({ wordBooks, setWordBooks, onImportToListen }) => {
     }
   };
 
-  // 删除单词本
-  const handleDelete = (wordBook) => {
-    if (wordBook.isDefault) {
-      message.error('默认单词本不能删除');
-      return;
-    }
-
-    Modal.confirm({
-      title: '确认删除',
-      content: `确定要删除单词本「${wordBook.name}」吗？`,
-      onOk: () => {
-        const updatedWordBooks = wordBooks.filter(wb => wb.id !== wordBook.id);
-        setWordBooks(updatedWordBooks);
-        message.success('删除成功');
-      }
-    });
-  };
-
   // 导出单词本
   const handleExport = (wordBook) => {
     const content = wordBook.words
-      .map(word => `${word.english}#${word.chinese}`)
+      .map(word => {
+        let line = `${word.english}#${word.chinese}`;
+        if (word.phonetic) {
+          line += `@${word.phonetic}`;
+        }
+        return line;
+      })
       .join('\n');
 
     const blob = new Blob([content], { type: 'text/plain' });
@@ -193,7 +248,7 @@ const WordBooks = ({ wordBooks, setWordBooks, onImportToListen }) => {
           </Upload>
         </div>
         <Input.TextArea
-          placeholder="请输入单词列表，支持格式：\n英文#中文\n英文,中文\n英文|中文\n每行一个单词或短语"
+          placeholder="请输入单词列表，支持格式：\n英文#中文@音标\n英文,中文@音标\n英文|中文@音标\n每行一个单词或短语"
           value={wordContent}
           onChange={e => setWordContent(e.target.value)}
           rows={10}

@@ -397,6 +397,11 @@ const playNextWord = () => {
             />
             <div style={{ margin: '0 40px', textAlign: 'center' }}>
               <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#333' }}>{getCurrentWord().english}</p>
+              {getCurrentWord().phonetic && (
+                <p style={{ fontSize: '16px', color: '#888', marginTop: '-5px', marginBottom: '10px' }}>
+                  {getCurrentWord().phonetic}
+                </p>
+              )}
               <div style={{ marginBottom: '10px' }}>
                 <Button
                   icon={<SoundOutlined />}

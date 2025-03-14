@@ -1,27 +1,25 @@
 ### Unit 5 Out with the Cubs
-carefully#小心地
-carelessly#粗心地
-happily#高興地
-sadly#悲傷地
-loudly#大聲地
-quietly#安靜地
-politely#有禮貌地
-rudely#粗魯地
-quickly#快速地
-slowly#慢慢地
-Cubs#幼童軍
-campsite#露營營地
-mission#任務
-instruction#指示
-treasure hunt#尋寶遊戲
-riddle#談話
-step#步驟
-possible#可能的
-solve#解答/破解
-location#地點/位置
-finally#最後
-split up#劃分
-search#搜尋
-dig#掘/挖
-map#地圖
-collect#收集
+carefully#小心地@/ˈkeəfəli/
+carelessly#粗心地@/ˈkeələsli/
+happily#高興地@/ˈhæpɪli/
+sadly#悲傷地@/ˈsædli/
+loudly#大聲地@/ˈlaʊdli/
+quietly#安靜地@/ˈkwaɪətli/
+politely#有禮貌地@/pəˈlaɪtli/
+rudely#粗魯地@/ˈruːdli/
+quickly#快速地@/ˈkwɪkli/
+slowly#慢慢地@/ˈsləʊli/
+Cubs#幼童軍@/kʌbz/
+campsite#露營營地@/ˈkæmpsaɪt/
+mission#任務@/ˈmɪʃn/
+instruction#指示@/ɪnˈstrʌkʃn/
+treasure hunt#尋寶遊戲@/ˈtreʒə hʌnt/
+riddle#謎語@/ˈrɪdl/
+solve#解答@/sɒlv/
+location#地點@/ləʊˈkeɪʃn/
+finally#最後@/ˈfaɪnəli/
+split up#劃分@/splɪt ʌp/
+search#搜尋@/sɜːtʃ/
+dig#挖掘@/dɪɡ/
+map#地圖@/mæp/
+collect#收集@/kəˈlekt/
