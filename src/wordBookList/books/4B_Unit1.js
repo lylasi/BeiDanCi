@@ -1,6 +1,6 @@
 export default {
     "id": "4B_Unit1",
-    "name": "4B_Unit1",
+    "name": "Unit 1 The story of Princess Milky (Part 1)",
     "isDefault": true,
     "words": [
         {

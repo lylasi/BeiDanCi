@@ -1,6 +1,6 @@
 export default {
     "id": "4B_Unit3",
-    "name": "4B_Unit3",
+    "name": "Unit 3 Museum Day",
     "isDefault": true,
     "words": [
         {
