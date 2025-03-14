@@ -153,3 +153,56 @@ This template provides a minimal setup to get React working in Vite with HMR and
 1. 启用TypeScript支持
 2. 集成[typescript-eslint](https://typescript-eslint.io)
 3. 参考[Vite TS模板](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts)
+
+
+## 开发者指南
+
+### 单词本生成工具
+
+项目提供了单词本生成工具，可以从文本文件批量生成单词本 JS 文件。
+
+#### 工具文件说明
+
+1. **wordBookGenerator.js**：核心工具类，位于 `src/utils/wordBookGenerator.js`
+   - 提供从文本文件生成单词本的功能
+   - 支持批量处理多个文本文件
+   - 自动生成索引文件
+
+2. **generateWordBooks.js**：执行脚本，位于 `scripts/generateWordBooks.js`
+   - 调用 wordBookGenerator 中的方法执行批量生成
+   - 简化命令行操作
+
+#### 使用方法
+
+1. 准备单词本文本文件，放在 `src/wordBookList` 目录下
+2. 文本文件格式要求：
+   - 每行一个单词条目
+   - 格式为：`英文#中文@音标`
+   - 可选：第一行以 `###` 开头作为单词本标题
+3. 运行生成脚本：
+
+```bash
+node scripts/generateWordBooks.js
+```
+4. 生成的单词本文件将保存在 `src/wordBookList/books` 目录下
+5. 同时会生成 `defaultWordBooks.js` 索引文件
+
+#### 文本文件示例
+```plaintext
+### 四年级英语单词
+apple#苹果@/ˈæpl/
+banana#香蕉@/bəˈnɑːnə/
+orange#橙子@/ˈɒrɪndʒ/
+```
+
+#### 自定义生成
+
+如需自定义生成过程，可以修改 scripts/generateWordBooks.js 文件中的参数：
+
+```javascript
+import { batchGenerateWordBooks } from '../src/utils/wordBookGenerator.js';
+
+// 参数1: 文本文件目录路径
+// 参数2: 输出目录路径
+batchGenerateWordBooks('./src/wordBookList', './src/wordBookList/books');
+```
