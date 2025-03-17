@@ -84,6 +84,16 @@ export default {
             "phonetic": "/ˈrɪdl/"
         },
         {
+            "english": "step",
+            "chinese": "步驟",
+            "phonetic": "/step/"
+        },
+        {
+            "english": "possible",
+            "chinese": "可能的",
+            "phonetic": "/ˈpɒsəbl/"
+        },
+        {
             "english": "solve",
             "chinese": "解答/破解",
             "phonetic": "/sɒlv/"

@@ -70,7 +70,7 @@ export default {
         },
         {
             "english": "spread",
-            "chinese": "傳播/(使）流傳",
+            "chinese": "傳播/(使)流傳",
             "phonetic": "/spred/"
         },
         {

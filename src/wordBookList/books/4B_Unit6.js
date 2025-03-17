@@ -95,12 +95,12 @@ export default {
         },
         {
             "english": "stomach",
-            "chinese": "胃",
+            "chinese": "胃/腹部",
             "phonetic": "/ˈstʌmək/"
         },
         {
             "english": "complain",
-            "chinese": "抱怨",
+            "chinese": "抱怨/投訴",
             "phonetic": "/kəmˈpleɪn/"
         },
         {
@@ -120,7 +120,7 @@ export default {
         },
         {
             "english": "fail",
-            "chinese": "失敗/未能（做到）",
+            "chinese": "失敗/未能(做到)",
             "phonetic": "/feɪl/"
         },
         {

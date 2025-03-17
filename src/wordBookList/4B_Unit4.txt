@@ -11,8 +11,8 @@ roller coaster#過山車@/ˈrəʊlə ˈkəʊstə(r)/
 Ferris wheel#摩天輪@/ˈferɪs wiːl/
 funfair#嘉年華@/ˈfʌnfeə(r)/
 proudly#自豪地@/ˈpraʊdli/
-present#展現@/prɪˈzent/
-spread#傳播@/spred/
+present#展現/介紹@/prɪˈzent/
+spread#傳播/(使)流傳@/spred/
 amazing#令人驚歎的@/əˈmeɪzɪŋ/
 humorous#滑稽有趣的@/ˈhjuːmərəs/
 adult#成年人@/ˈædʌlt/
@@ -20,7 +20,7 @@ free#免費的@/friː/
 admission#入場費@/ədˈmɪʃn/
 slightly#稍微@/ˈslaɪtli/
 last#持續@/lɑːst/
-permission#准許@/pəˈmɪʃn/
+permission#准許/許可@/pəˈmɪʃn/
 lollipop#棒棒糖@/ˈlɒlipɒp/
 popcorn#爆米花@/ˈpɒpkɔːn/
 event#公開活動@/ɪˈvent/

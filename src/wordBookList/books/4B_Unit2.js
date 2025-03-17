@@ -40,7 +40,7 @@ export default {
         },
         {
             "english": "noodles and pasta",
-            "chinese": "麵",
+            "chinese": "麵食",
             "phonetic": "/ˈnuːdlz ənd ˈpæstə/"
         },
         {
@@ -125,7 +125,7 @@ export default {
         },
         {
             "english": "contain",
-            "chinese": "包含",
+            "chinese": "包含/含有",
             "phonetic": "/kənˈteɪn/"
         },
         {
@@ -137,6 +137,26 @@ export default {
             "english": "energy",
             "chinese": "能量",
             "phonetic": "/ˈenədʒi/"
+        },
+        {
+            "english": "protein",
+            "chinese": "蛋白質",
+            "phonetic": "/ˈprəʊtiːn/"
+        },
+        {
+            "english": "fat",
+            "chinese": "脂肪",
+            "phonetic": "/fæt/"
+        },
+        {
+            "english": "sugar",
+            "chinese": "糖",
+            "phonetic": "/ˈʃʊɡə(r)/"
+        },
+        {
+            "english": "amount",
+            "chinese": "數量",
+            "phonetic": "/əˈmaʊnt/"
         }
     ]
 };

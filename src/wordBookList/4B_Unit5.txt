@@ -15,8 +15,10 @@ mission#任務@/ˈmɪʃn/
 instruction#指示@/ɪnˈstrʌkʃn/
 treasure hunt#尋寶遊戲@/ˈtreʒə hʌnt/
 riddle#謎語@/ˈrɪdl/
-solve#解答@/sɒlv/
-location#地點@/ləʊˈkeɪʃn/
+step#步驟@/step/
+possible#可能的@/ˈpɒsəbl/
+solve#解答/破解@/sɒlv/
+location#地點/位置@/ləʊˈkeɪʃn/
 finally#最後@/ˈfaɪnəli/
 split up#劃分@/splɪt ʌp/
 search#搜尋@/sɜːtʃ/

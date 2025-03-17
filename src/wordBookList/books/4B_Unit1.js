@@ -21,7 +21,7 @@ export default {
         {
             "english": "a packet of sausages",
             "chinese": "一包香腸",
-            "phonetic": "/ə ˈpækɪt əv ˈsɒsɪdʒɪs/"
+            "phonetic": "/ə ˈpækɪt əv ˈsɒsɪdʒɪz/"
         },
         {
             "english": "chicken nuggets",
@@ -55,12 +55,12 @@ export default {
         },
         {
             "english": "snacks",
-            "chinese": "小食",
+            "chinese": "派對小吃",
             "phonetic": "/snæks/"
         },
         {
             "english": "fairy tale",
-            "chinese": "童話（故事）",
+            "chinese": "童話故事",
             "phonetic": "/ˈfeəri teɪl/"
         },
         {
@@ -120,12 +120,12 @@ export default {
         },
         {
             "english": "a few",
-            "chinese": "有些/幾個",
+            "chinese": "有些/幾個（可數）",
             "phonetic": "/ə fjuː/"
         },
         {
             "english": "a little",
-            "chinese": "少量的/一些",
+            "chinese": "少量的/一些（不可數）",
             "phonetic": "/ə ˈlɪtl/"
         },
         {
