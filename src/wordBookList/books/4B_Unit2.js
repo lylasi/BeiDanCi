@@ -75,7 +75,7 @@ export default {
         },
         {
             "english": "dip",
-            "chinese": "蘸",
+            "chinese": "蘸/浸",
             "phonetic": "/dɪp/"
         },
         {
@@ -100,7 +100,7 @@ export default {
         },
         {
             "english": "advice",
-            "chinese": "忠告",
+            "chinese": "忠告/建議",
             "phonetic": "/ədˈvaɪs/"
         },
         {
@@ -130,7 +130,7 @@ export default {
         },
         {
             "english": "per",
-            "chinese": "每一",
+            "chinese": "每/每一",
             "phonetic": "/pɜː(r)/"
         },
         {

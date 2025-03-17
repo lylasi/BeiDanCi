@@ -65,12 +65,12 @@ export default {
         },
         {
             "english": "present",
-            "chinese": "展現",
+            "chinese": "展現/介紹",
             "phonetic": "/prɪˈzent/"
         },
         {
             "english": "spread",
-            "chinese": "傳播",
+            "chinese": "傳播/(使）流傳",
             "phonetic": "/spred/"
         },
         {
@@ -110,7 +110,7 @@ export default {
         },
         {
             "english": "permission",
-            "chinese": "准許",
+            "chinese": "准許/許可",
             "phonetic": "/pəˈmɪʃn/"
         },
         {

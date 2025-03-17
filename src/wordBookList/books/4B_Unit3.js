@@ -20,7 +20,7 @@ export default {
         },
         {
             "english": "lift",
-            "chinese": "電梯",
+            "chinese": "電梯/升降機",
             "phonetic": "/lɪft/"
         },
         {
@@ -65,7 +65,7 @@ export default {
         },
         {
             "english": "zone",
-            "chinese": "區域",
+            "chinese": "區/區域",
             "phonetic": "/zəʊn/"
         },
         {

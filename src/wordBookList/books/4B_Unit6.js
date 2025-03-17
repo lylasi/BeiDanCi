@@ -75,17 +75,17 @@ export default {
         },
         {
             "english": "metre",
-            "chinese": "米",
+            "chinese": "米/公尺",
             "phonetic": "/ˈmiːtə(r)/"
         },
         {
             "english": "kilogram",
-            "chinese": "公斤",
+            "chinese": "千克/公斤",
             "phonetic": "/ˈkɪləɡræm/"
         },
         {
             "english": "centimetre",
-            "chinese": "厘米",
+            "chinese": "厘米/公分",
             "phonetic": "/ˈsentɪmiːtə(r)/"
         },
         {
@@ -120,22 +120,22 @@ export default {
         },
         {
             "english": "fail",
-            "chinese": "失敗",
+            "chinese": "失敗/未能（做到）",
             "phonetic": "/feɪl/"
         },
         {
             "english": "never mind",
-            "chinese": "沒關係",
+            "chinese": "沒關係（用於安慰）",
             "phonetic": "/ˈnevə maɪnd/"
         },
         {
             "english": "height",
-            "chinese": "身高",
+            "chinese": "身高/高度",
             "phonetic": "/haɪt/"
         },
         {
             "english": "weight",
-            "chinese": "體重",
+            "chinese": "體重/重量",
             "phonetic": "/weɪt/"
         },
         {

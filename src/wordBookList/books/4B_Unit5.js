@@ -85,12 +85,12 @@ export default {
         },
         {
             "english": "solve",
-            "chinese": "解答",
+            "chinese": "解答/破解",
             "phonetic": "/sɒlv/"
         },
         {
             "english": "location",
-            "chinese": "地點",
+            "chinese": "地點/位置",
             "phonetic": "/ləʊˈkeɪʃn/"
         },
         {

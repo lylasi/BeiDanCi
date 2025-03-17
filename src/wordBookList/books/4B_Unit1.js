@@ -60,7 +60,7 @@ export default {
         },
         {
             "english": "fairy tale",
-            "chinese": "童話",
+            "chinese": "童話（故事）",
             "phonetic": "/ˈfeəri teɪl/"
         },
         {
@@ -80,12 +80,12 @@ export default {
         },
         {
             "english": "idiom",
-            "chinese": "成語",
+            "chinese": "成語/慣用語",
             "phonetic": "/ˈɪdiəm/"
         },
         {
             "english": "spell",
-            "chinese": "咒語",
+            "chinese": "咒語/魔法",
             "phonetic": "/spel/"
         },
         {
@@ -110,22 +110,22 @@ export default {
         },
         {
             "english": "at once",
-            "chinese": "馬上",
+            "chinese": "馬上/立刻",
             "phonetic": "/æt wʌns/"
         },
         {
             "english": "plenty of",
-            "chinese": "大量的",
+            "chinese": "大量的/充足的",
             "phonetic": "/ˈplenti əv/"
         },
         {
             "english": "a few",
-            "chinese": "有些",
+            "chinese": "有些/幾個",
             "phonetic": "/ə fjuː/"
         },
         {
             "english": "a little",
-            "chinese": "少量的",
+            "chinese": "少量的/一些",
             "phonetic": "/ə ˈlɪtl/"
         },
         {
